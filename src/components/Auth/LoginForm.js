@@ -30,11 +30,10 @@ export default function LoginForm() {
         setError("Usuario incorrecto");
         logout();
       } else {
-        debugger;
         console.log("***************", userDetails);
         console.log(auth);
         login(userDetails);
-        console.log(auth());
+        console.log(auth);
       }
     },
   });
