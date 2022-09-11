@@ -11,7 +11,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { user, userDetails } from "../../utils/userDB";
 import _ from "lodash";
+import useAuth from "../hooks/useAuth";
 export default function LoginForm() {
+  const { auth, login, logout } = useAuth();
+
+  console.log("auth-->", auth);
   const [error, setError] = useState("");
   const formik = useFormik({
     validationSchema: Yup.object(validationSchema()),
@@ -21,8 +25,17 @@ export default function LoginForm() {
       console.log("formValue...", formValue);
       console.log("user..", user);
       setError("");
-      console.log(_.isEqual(user, formValue));
-      !_.isEqual(user, formValue) && setError("Usuario incorrecto");
+
+      if (!_.isEqual(user, formValue)) {
+        setError("Usuario incorrecto");
+        logout();
+      } else {
+        debugger;
+        console.log("***************", userDetails);
+        console.log(auth);
+        login(userDetails);
+        console.log(auth());
+      }
     },
   });
 
